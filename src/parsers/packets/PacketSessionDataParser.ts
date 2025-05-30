@@ -1,15 +1,14 @@
-import {F1Parser} from '../F1Parser';
-import {MarshalZoneParser} from './MarshalZoneParser';
-import {PacketHeaderParser} from './PacketHeaderParser';
-import {PacketSessionData} from './types';
-import {WeatherForecastSampleParser} from './WeatherForecastSampleParser';
+import { F1Parser } from '../F1Parser';
+import { MarshalZoneParser } from './MarshalZoneParser';
+import { PacketHeaderParser } from './PacketHeaderParser';
+import { PacketSessionData } from './types';
+import { WeatherForecastSampleParser } from './WeatherForecastSampleParser';
 
 export class PacketSessionDataParser extends F1Parser {
   data: PacketSessionData;
 
   constructor(buffer: Buffer, packetFormat: number) {
     super();
-
     this.endianess('little')
       .nest('m_header', {
         type: new PacketHeaderParser(packetFormat),
@@ -30,12 +29,12 @@ export class PacketSessionDataParser extends F1Parser {
       .uint8('m_spectatorCarIndex')
       .uint8('m_sliProNativeSupport')
       .uint8('m_numMarshalZones')
-      .array('m_marshalZones', {length: 21, type: new MarshalZoneParser()})
+      .array('m_marshalZones', { length: 21, type: new MarshalZoneParser() })
       .uint8('m_safetyCarStatus')
       .uint8('m_networkGame')
       .uint8('m_numWeatherForecastSamples')
       .array('m_weatherForecastSamples', {
-        length: 56,
+        length: 64,
         type: new WeatherForecastSampleParser(),
       })
       .uint8('m_forecastAccuracy')
@@ -68,6 +67,47 @@ export class PacketSessionDataParser extends F1Parser {
         .uint8('m_numSafetyCarPeriods')
         .uint8('m_numVirtualSafetyCarPeriods')
         .uint8('m_numRedFlagPeriods');
+    }
+
+    if (packetFormat === 2025) {
+      this.uint8('m_speedUnitsLeadPlayer')
+        .uint8('m_temperatureUnitsLeadPlayer')
+        .uint8('m_speedUnitsSecondaryPlayer')
+        .uint8('m_temperatureUnitsSecondaryPlayer')
+        .uint8('m_numSafetyCarPeriods')
+        .uint8('m_numVirtualSafetyCarPeriods')
+        .uint8('m_numRedFlagPeriods')
+        .uint8('m_equalCarPerformance')
+        .uint8('m_recoveryMode')
+        .uint8('m_flashbackLimit')
+        .uint8('m_surfaceType')
+        .uint8('m_lowFuelMode')
+        .uint8('m_raceStarts')
+        .uint8('m_tyreTemperature')
+        .uint8('m_pitLaneTyreSim')
+        .uint8('m_carDamage')
+        .uint8('m_carDamageRate')
+        .uint8('m_collisions')
+        .uint8('m_collisionsOffForFirstLapOnly')
+        .uint8('m_mpUnsafePitRelease')
+        .uint8('m_mpOffForGriefing')
+        .uint8('m_cornerCuttingStringency')
+        .uint8('m_parcFermeRules')
+        .uint8('m_pitStopExperience')
+        .uint8('m_safetyCar')
+        .uint8('m_safetyCarExperience')
+        .uint8('m_formationLap')
+        .uint8('m_formationLapExperience')
+        .uint8('m_redFlags')
+        .uint8('m_affectsLicenceLevelSolo')
+        .uint8('m_affectsLicenceLevelMP')
+        .uint8('m_numSessionsInWeekend')
+        .array('m_weekendStructure', {
+          type: 'uint8',
+          length: 12
+        })
+        .floatle('m_sector2LapDistanceStart')
+        .floatle('m_sector3LapDistanceStart');
     }
 
     this.data = this.fromBuffer(buffer);

@@ -31,6 +31,7 @@
     "prepublishOnly": "npm run build",
     "start": "npm run build && node build/src/playground/index.js",
     "build": "tsc",
+    "watch": "tsc --watch",
     "build:link": "npm run build && npm link",
     "type-check:watch": "npm run type-check -- --watch",
     "type-check": "tsc --noEmit",
