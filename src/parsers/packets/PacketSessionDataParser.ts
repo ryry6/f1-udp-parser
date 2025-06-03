@@ -33,10 +33,6 @@ export class PacketSessionDataParser extends F1Parser {
       .uint8('m_safetyCarStatus')
       .uint8('m_networkGame')
       .uint8('m_numWeatherForecastSamples')
-      .array('m_weatherForecastSamples', {
-        length: 64,
-        type: new WeatherForecastSampleParser(),
-      })
       .uint8('m_forecastAccuracy')
       .uint8('m_aiDifficulty')
       .uint32le('m_seasonLinkIdentifier')
@@ -102,12 +98,12 @@ export class PacketSessionDataParser extends F1Parser {
         .uint8('m_affectsLicenceLevelSolo')
         .uint8('m_affectsLicenceLevelMP')
         .uint8('m_numSessionsInWeekend')
-        .array('m_weekendStructure', {
-          type: 'uint8',
-          length: 12
-        })
         .floatle('m_sector2LapDistanceStart')
-        .floatle('m_sector3LapDistanceStart');
+        .floatle('m_sector3LapDistanceStart')
+        .array('m_weatherForecastSamples', {
+          length: 64,
+          type: new WeatherForecastSampleParser(),
+        });
     }
 
     this.data = this.fromBuffer(buffer);

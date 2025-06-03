@@ -122,41 +122,41 @@ class F1TelemetryClient extends EventEmitter {
       case PACKETS.motion:
         return PacketMotionDataParser;
 
-      case PACKETS.lapData:
-        return PacketLapDataParser;
+      // case PACKETS.lapData:
+      //   return PacketLapDataParser;
 
       case PACKETS.event:
         return PacketEventDataParser;
 
-      case PACKETS.participants:
-        return PacketParticipantsDataParser;
+      // case PACKETS.participants:
+      //   return PacketParticipantsDataParser;
 
-      case PACKETS.carSetups:
-        return PacketCarSetupDataParser;
+      // case PACKETS.carSetups:
+      //   return PacketCarSetupDataParser;
 
-      case PACKETS.carTelemetry:
-        return PacketCarTelemetryDataParser;
+      // case PACKETS.carTelemetry:
+      //   return PacketCarTelemetryDataParser;
 
-      case PACKETS.carStatus:
-        return PacketCarStatusDataParser;
+      // case PACKETS.carStatus:
+      //   return PacketCarStatusDataParser;
 
       case PACKETS.finalClassification:
         return PacketFinalClassificationDataParser;
 
-      case PACKETS.lobbyInfo:
-        return PacketLobbyInfoDataParser;
+      // case PACKETS.lobbyInfo:
+      //   return PacketLobbyInfoDataParser;
 
-      case PACKETS.carDamage:
-        return PacketCarDamageDataParser;
+      // case PACKETS.carDamage:
+      //   return PacketCarDamageDataParser;
 
-      case PACKETS.sessionHistory:
-        return PacketSessionHistoryDataParser;
+      // case PACKETS.sessionHistory:
+      //   return PacketSessionHistoryDataParser;
 
-      case PACKETS.tyreSets:
-        return PacketTyreSetsDataParser;
+      // case PACKETS.tyreSets:
+      //   return PacketTyreSetsDataParser;
 
-      case PACKETS.motionEx:
-        return PacketMotionExDataParser;
+      // case PACKETS.motionEx:
+      //   return PacketMotionExDataParser;
 
       default:
         return null;
@@ -239,9 +239,9 @@ class F1TelemetryClient extends EventEmitter {
       }
 
       const address = this.socket.address() as AddressInfo;
-      // console.log(
-      //   `UDP Client listening on ${address.address}:${address.port} 🏎`
-      // );
+      console.log(
+        `UDP Client listening on ${address.address}:${address.port} 🏎`
+      );
       this.socket.setBroadcast(true);
     });
 
